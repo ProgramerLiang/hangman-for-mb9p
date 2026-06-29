@@ -1,0 +1,374 @@
+<template>
+  <!-- Main Menu Screen -->
+  <div class="page" if="{{screen === 'menu'}}">
+    <div class="title-area">
+      <text class="title">HANGMAN</text>
+      <text class="subtitle">猜单词游戏</text>
+    </div>
+    <div class="menu-actions">
+      <input class="btn-start" type="button" value="开始游戏" @click="onStartGame" />
+      <text class="highscore-text">最高分: {{highScore}}</text>
+    </div>
+  </div>
+
+  <!-- Playing Screen -->
+  <div class="page" if="{{screen === 'playing'}}">
+    <!-- Word display -->
+    <text class="word-display">{{wordDisplay}}</text>
+
+    <!-- Hint -->
+    <text class="hint-text" if="{{showHint}}">提示: {{currentHint}}</text>
+
+    <!-- Hangman ASCII -->
+    <div class="hangman-area">
+      <text class="hangman-art">{{hangmanArt}}</text>
+    </div>
+
+    <!-- Status: wrong count + guessed letters -->
+    <text class="status-text">错误: {{wrongCount}}/{{maxWrong}}</text>
+
+    <!-- Letter grid -->
+    <div class="letter-grid">
+      <div for="{{letterButtons}}" @click="onLetterClick" data-letter="{{$item.char}}"
+           class="letter-cell {{ $item.disabled ? 'letter-disabled' : '' }}">
+        <text class="letter-char">{{$item.char}}</text>
+      </div>
+    </div>
+  </div>
+
+  <!-- Result Screen -->
+  <div class="page" if="{{screen === 'result'}}">
+    <div class="result-area">
+      <text class="result-title">{{resultTitle}}</text>
+      <text class="result-word">单词: {{secretWord}}</text>
+      <text class="result-score" if="{{win}}">得分: {{score}}</text>
+    </div>
+    <div class="result-actions">
+      <input class="btn-start" type="button" value="再来一局" @click="onStartGame" />
+      <input class="btn-menu" type="button" value="返回菜单" @click="onGoMenu" />
+    </div>
+  </div>
+</template>
+
+<style>
+  .page {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background-color: #1a1a2e;
+    width: 100%;
+    height: 100%;
+  }
+
+  .title-area {
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .title {
+    font-size: 40px;
+    font-weight: bold;
+    color: #e94560;
+    lines: 1;
+  }
+
+  .subtitle {
+    font-size: 18px;
+    color: #a0a0b0;
+    lines: 1;
+    margin-top: 5px;
+  }
+
+  .menu-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn-start {
+    width: 160px;
+    height: 50px;
+    font-size: 22px;
+    color: #ffffff;
+    background-color: #e94560;
+    border-radius: 8px;
+    margin-top: 15px;
+  }
+
+  .btn-menu {
+    width: 160px;
+    height: 45px;
+    font-size: 20px;
+    color: #a0a0b0;
+    background-color: #16213e;
+    border-radius: 8px;
+    margin-top: 10px;
+  }
+
+  .highscore-text {
+    font-size: 16px;
+    color: #f0a500;
+    lines: 1;
+    margin-top: 10px;
+  }
+
+  .word-display {
+    font-size: 28px;
+    font-weight: bold;
+    color: #ffffff;
+    letter-spacing: 6px;
+    lines: 1;
+    margin-top: 5px;
+  }
+
+  .hint-text {
+    font-size: 14px;
+    color: #f0a500;
+    lines: 1;
+    margin-top: 4px;
+  }
+
+  .hangman-area {
+    margin-top: 6px;
+    margin-bottom: 6px;
+    width: 120px;
+    height: 70px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hangman-art {
+    font-size: 16px;
+    color: #e94560;
+    lines: 4;
+    text-align: center;
+  }
+
+  .status-text {
+    font-size: 14px;
+    color: #a0a0b0;
+    lines: 1;
+    margin-bottom: 4px;
+  }
+
+  .letter-grid {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .letter-cell {
+    width: 36px;
+    height: 36px;
+    margin: 3px;
+    justify-content: center;
+    align-items: center;
+    background-color: #0f3460;
+    border-radius: 6px;
+  }
+
+  .letter-disabled {
+    background-color: #2a2a3e;
+    opacity: 0.4;
+  }
+
+  .letter-char {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffffff;
+    lines: 1;
+    text-align: center;
+  }
+
+  .result-area {
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+
+  .result-title {
+    font-size: 32px;
+    font-weight: bold;
+    lines: 1;
+    margin-bottom: 8px;
+  }
+
+  .result-word {
+    font-size: 20px;
+    color: #ffffff;
+    lines: 1;
+    margin-bottom: 5px;
+  }
+
+  .result-score {
+    font-size: 18px;
+    color: #f0a500;
+    lines: 1;
+  }
+
+  .result-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+</style>
+
+<script>
+  var hangman = require('../../common/hangman.js')
+  var wordList = require('../../common/words.js')
+
+  export default {
+    private: {
+      // Screen state
+      screen: 'menu',
+
+      // Game state
+      secretWord: '',
+      wordDisplay: '',
+      guessedLetters: '',
+      hangmanArt: '',
+      currentHint: '',
+      wrongCount: 0,
+      maxWrong: 6,
+      win: false,
+      score: 0,
+      showHint: true,
+
+      // UI state
+      resultTitle: '',
+      highScore: 0,
+      letterButtons: [],
+
+      // Internal
+      _usedWords: []
+    },
+
+    onInit: function () {
+      this.initLetters()
+      this.loadHighScore()
+    },
+
+    initLetters: function () {
+      this.letterButtons = hangman.initLetterButtons()
+    },
+
+    loadHighScore: function () {
+      var self = this
+      try {
+        var storage = require('@system.storage')
+        storage.get({
+          key: 'hangman_highscore',
+          success: function (data) {
+            if (data && data.length > 0) {
+              self.highScore = parseInt(data, 10) || 0
+            }
+          },
+          fail: function () {
+            self.highScore = 0
+          }
+        })
+      } catch (e) {
+        self.highScore = 0
+      }
+    },
+
+    saveHighScore: function () {
+      var self = this
+      try {
+        var storage = require('@system.storage')
+        storage.set({
+          key: 'hangman_highscore',
+          value: String(self.highScore)
+        })
+      } catch (e) {
+        // storage not available
+      }
+    },
+
+    onStartGame: function () {
+      var picked = hangman.pickWord(wordList, this._usedWords)
+      this.secretWord = picked.word
+      this.wordDisplay = picked.display
+      this.currentHint = picked.hint
+      this.guessedLetters = ''
+      this.wrongCount = 0
+      this.win = false
+      this.score = 0
+      this.hangmanArt = hangman.getHangmanArt(0)
+      this.initLetters()
+      this.showHint = true
+      this.screen = 'playing'
+    },
+
+    onLetterClick: function (evt) {
+      // If already won/lost, ignore clicks
+      if (this.win || this.wrongCount >= this.maxWrong) {
+        return
+      }
+
+      // Extract letter from data attribute
+      var letter = ''
+      if (evt && evt.target) {
+        letter = evt.target.dataset.letter
+        // If dataset not found, try attr
+        if (!letter && evt.target.attr) {
+          letter = evt.target.attr('data-letter')
+        }
+      }
+      if (!letter) return
+
+      var upper = letter.toUpperCase()
+
+      // Find the button and disable it
+      for (var i = 0; i < this.letterButtons.length; i++) {
+        if (this.letterButtons[i].char === upper) {
+          if (this.letterButtons[i].disabled) return  // already guessed
+          this.letterButtons[i].disabled = true
+          break
+        }
+      }
+
+      // Proceed with guess
+      var result = hangman.guessLetter(upper, this.secretWord, this.wordDisplay)
+      this.wordDisplay = result.display
+
+      if (result.hit) {
+        // Correct guess
+        if (result.wordComplete) {
+          this.win = true
+          this.score = hangman.calculateScore(this.secretWord, this.wrongCount)
+          if (this.score > this.highScore) {
+            this.highScore = this.score
+            this.saveHighScore()
+          }
+          this.resultTitle = '恭喜过关!'
+          var self = this
+          setTimeout(function () {
+            self.screen = 'result'
+          }, 300)
+        }
+      } else {
+        // Wrong guess
+        this.wrongCount++
+        this.hangmanArt = hangman.getHangmanArt(this.wrongCount)
+        if (this.wrongCount >= this.maxWrong) {
+          this.win = false
+          this.score = 0
+          this.resultTitle = '游戏结束'
+          // Reveal the full word
+          this.wordDisplay = this.secretWord.split('').join(' ')
+          var self = this
+          setTimeout(function () {
+            self.screen = 'result'
+          }, 300)
+        }
+      }
+    },
+
+    onGoMenu: function () {
+      this.screen = 'menu'
+    }
+  }
+</script>
