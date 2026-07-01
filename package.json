@@ -1,6 +1,6 @@
 {
   "name": "hangman-mi-band-9-pro",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "private": true,
   "description": "Hangman game for Xiaomi Mi Band 9 Pro (Vela JS)",
   "scripts": {

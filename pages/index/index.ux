@@ -157,8 +157,8 @@
       keyRow1: [], keyRow2: [], keyRow3: [],
       accentColor: '#e94560',
       vibrationOn: true,
-      versionName: '1.1.0',
-      versionCode: 2,
+      versionName: '1.1.1',
+      versionCode: 3,
       vib: null
     },
 
