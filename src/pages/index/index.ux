@@ -13,6 +13,8 @@
       <input class="btn-settings" type="button" value="设置" onclick="onOpenSettings" />
       <input class="btn-about" type="button" value="关于" onclick="onOpenAbout" />
 
+    </div>
+
     <!-- === SETTINGS === -->
     <div class="main" if="{{screen === 'settings'}}">
       <text class="settings-heading">主题色</text>
