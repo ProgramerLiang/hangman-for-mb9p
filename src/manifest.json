@@ -2,8 +2,8 @@
   "package": "com.corripo.hangman",
   "name": "Hangman",
   "icon": "/common/images/logo.png",
-  "versionName": "1.1.1",
-  "versionCode": 3,
+  "versionName": "1.1.2",
+  "versionCode": 4,
   "minPlatformVersion": 1000,
   "features": [
     { "name": "system.storage" },

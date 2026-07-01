@@ -101,6 +101,7 @@
   .clock { position: absolute; left: 77px; top: 7px; width: 182px; height: 34px; font-size: 26px; color: #9a9a9a; text-align: center; }
   .title { position: absolute; left: 77px; top: 35px; width: 182px; height: 45px; font-size: 28px; color: #ffffff; text-align: center; }
   .main { position: absolute; top: 82px; left: 6px; width: 324px; height: 398px; flex-direction: column; align-items: center; }
+  .card { flex-direction: column; width: 300px; padding: 14px; border-radius: 24px; background-color: #262626; align-items: center; }
   .menu-card { margin-top: 50px; margin-bottom: 16px; }
   .word-card { margin-top: 10px; margin-bottom: 4px; }
   .art-card { margin-top: 6px; margin-bottom: 4px; }
@@ -157,8 +158,8 @@
       keyRow1: [], keyRow2: [], keyRow3: [],
       accentColor: '#e94560',
       vibrationOn: true,
-      versionName: '1.1.1',
-      versionCode: 3,
+      versionName: '1.1.2',
+      versionCode: 4,
       vib: null
     },
 
