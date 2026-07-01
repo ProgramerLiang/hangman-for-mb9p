@@ -33,7 +33,7 @@
       <text class="settings-heading" style="margin-top: 18px;">振动反馈</text>
       <div class="setting-row">
         <text class="setting-label">按键振动</text>
-        <switch checked="{{vibrationOn}}" class="vib-switch" @change="onVibChange"></switch>
+        <switch checked="{{vibrationOn}}" class="vib-switch" thumb-color="{{accentColor}}" track-color="{{accentColor}}44" @change="onVibChange"></switch>
       </div>
       <input class="btn-start" type="button" value="返回" style="background-color: {{accentColor}}" onclick="onGoMenu" />
     </div>
@@ -55,11 +55,11 @@
 
     <!-- === PLAYING === -->
     <div class="main" if="{{screen === 'playing'}}">
-      <div class="card word-card">
+      <div class="card word-card" style="background-color: {{accentColor}}22">
         <text class="word-display" style="color: {{accentColor}}">{{wordDisplay}}</text>
       </div>
       <text class="status-text">错误 {{wrongCount}}/{{maxWrong}}</text>
-      <text class="hint-text" if="{{showHint}}">{{currentHint}}</text>
+     <text class="hint-text-accent" if="{{showHint}}" style="color: {{accentColor}}">{{currentHint}}</text>
       <div class="card art-card">
         <text class="hangman-art" style="color: {{accentColor}}">{{hangmanArt}}</text>
       </div>
@@ -101,28 +101,29 @@
   .clock { position: absolute; left: 77px; top: 7px; width: 182px; height: 34px; font-size: 26px; color: #9a9a9a; text-align: center; }
   .title { position: absolute; left: 77px; top: 35px; width: 182px; height: 45px; font-size: 28px; color: #ffffff; text-align: center; }
   .main { position: absolute; top: 82px; left: 6px; width: 324px; height: 398px; flex-direction: column; align-items: center; }
-  .card { flex-direction: column; width: 300px; padding: 14px; border-radius: 24px; background-color: #262626; align-items: center; }
+ .card { flex-direction: column; width: 300px; padding: 14px; border-radius: 24px; background-color: #000000; align-items: center; }
   .menu-card { margin-top: 50px; margin-bottom: 16px; }
-  .word-card { margin-top: 10px; margin-bottom: 4px; }
+ .word-card { margin-top: 10px; margin-bottom: 4px; }
   .art-card { margin-top: 6px; margin-bottom: 4px; }
   .result-card { margin-top: 30px; margin-bottom: 16px; align-items: center; }
-  .subtitle-text { font-size: 24px; color: #ffffff; lines: 1; width: 260px; text-align: center; }
-  .highscore-text { font-size: 20px; color: #9a9a9a; lines: 1; margin-top: 8px; width: 260px; text-align: center; }
-  .word-display { font-size: 32px; font-weight: bold; lines: 1; text-align: center; }
-  .hint-text { font-size: 24px; color: #f0a500; lines: 2; text-align: center; width: 300px; margin-top: 6px; }
-  .hangman-art { font-size: 18px; lines: 4; text-align: center; }
-  .status-text { position: absolute; right: 10px; top: 10px; font-size: 18px; color: #9a9a9a; lines: 1; }
-  .result-title { font-size: 34px; font-weight: bold; lines: 1; margin-bottom: 6px; text-align: center; color: #ffffff; width: 260px; }
-  .result-word { font-size: 24px; color: #ffffff; lines: 1; margin-bottom: 4px; text-align: center; width: 260px; }
-  .result-hint { font-size: 22px; color: #a8a8a8; lines: 2; margin-bottom: 4px; text-align: center; width: 260px; }
-  .result-score-text { font-size: 20px; color: #f0a500; lines: 1; text-align: center; width: 260px; }
+ .subtitle-text { font-size: 24px; color: #ffffff; lines: 1; width: 260px; text-align: center; }
+ .highscore-text { font-size: 20px; color: #9a9a9a; lines: 1; margin-top: 8px; width: 260px; text-align: center; }
+ .word-display { font-size: 32px; font-weight: bold; lines: 1; text-align: center; }
+ .hint-text { font-size: 24px; color: #f0a500; lines: 2; text-align: center; width: 300px; margin-top: 6px; }
+ .hint-text-accent { font-size: 24px; lines: 2; text-align: center; width: 300px; margin-top: 6px; }
+ .hangman-art { font-size: 18px; lines: 4; text-align: center; }
+ .status-text { position: absolute; right: 10px; top: 10px; font-size: 18px; color: #9a9a9a; lines: 1; }
+ .result-title { font-size: 34px; font-weight: bold; lines: 1; margin-bottom: 6px; text-align: center; color: #ffffff; width: 260px; }
+ .result-word { font-size: 24px; color: #ffffff; lines: 1; margin-bottom: 4px; text-align: center; width: 260px; }
+ .result-hint { font-size: 22px; color: #a8a8a8; lines: 2; margin-bottom: 4px; text-align: center; width: 260px; }
+ .result-score-text { font-size: 20px; color: #f0a500; lines: 1; text-align: center; width: 260px; }
   .btn-start { width: 220px; height: 56px; font-size: 24px; color: #ffffff; border-radius: 28px; margin-top: 12px; }
   .btn-settings { width: 220px; height: 50px; font-size: 22px; color: #a8a8a8; background-color: #262626; border-radius: 28px; margin-top: 10px; }
   .btn-about { width: 220px; height: 50px; font-size: 22px; color: #a8a8a8; background-color: #262626; border-radius: 28px; margin-top: 10px; }
   .btn-menu { width: 220px; height: 50px; font-size: 22px; color: #a8a8a8; background-color: #262626; border-radius: 28px; margin-top: 10px; }
   .keyboard-area { position: absolute; left: 0; bottom: 4px; width: 100%; }
   .key-row { flex-direction: row; justify-content: flex-start; margin-top: 5px; }
-  .key { width: 56px; height: 56px; margin: 3px; border-radius: 28px; background-color: #262626; border: 3px solid rgba(255,255,255,0.06); font-size: 22px; font-weight: bold; color: #ffffff; text-align: center; }
+ .key { width: 56px; height: 56px; margin: 3px; border-radius: 28px; background-color: #262626; border: 3px solid rgba(255,255,255,0.06); font-size: 22px; font-weight: bold; color: #ffffff; text-align: center; }
   .key-disabled { background-color: #1a1a1a; opacity: 0.3; }
 
   /* Settings */
@@ -133,7 +134,7 @@
   .swatch-on { border-color: #ffffff; }
   .setting-row { flex-direction: row; width: 300px; justify-content: space-between; align-items: center; padding: 10px 0; }
   .setting-label { font-size: 22px; color: #ffffff; lines: 1; }
-  .about-card { flex-direction: column; width: 300px; padding: 16px; border-radius: 20px; background-color: #262626; align-items: center; margin-top: 4px; }
+ .about-card { flex-direction: column; width: 300px; padding: 16px; border-radius: 20px; background-color: #000000; align-items: center; margin-top: 4px; }
   .about-title { font-size: 24px; font-weight: bold; color: #ffffff; lines: 1; }
   .about-ver { font-size: 18px; color: #9a9a9a; lines: 1; margin-top: 4px; }
   .about-sep { width: 200px; height: 1px; background-color: #3a3a3a; margin: 10px 0; }
@@ -158,8 +159,8 @@
       keyRow1: [], keyRow2: [], keyRow3: [],
       accentColor: '#e94560',
       vibrationOn: true,
-      versionName: '1.1.2',
-      versionCode: 4,
+      versionName: '1.1.3',
+      versionCode: 5,
       vib: null
     },
 
