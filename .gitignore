@@ -1,0 +1,8 @@
+node_modules/
+build/
+.temp_*/
+*.log
+dist/
+.vscode/
+words-extend.js.bak
+src/words-extend.js

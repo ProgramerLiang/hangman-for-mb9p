@@ -1,0 +1,31 @@
+{
+  "package": "com.corripo.hangman",
+  "name": "Hangman",
+  "icon": "/common/images/logo.png",
+  "versionName": "1.0.0",
+  "versionCode": 1,
+  "minPlatformVersion": 1000,
+  "features": [
+    { "name": "system.storage" },
+    { "name": "system.prompt" },
+    { "name": "system.vibrator" },
+    { "name": "system.device" }
+  ],
+  "config": {
+    "logLevel": "debug",
+    "designWidth": 336
+  },
+  "router": {
+    "entry": "pages/index",
+    "pages": {
+      "pages/index": {
+        "component": "index",
+        "path": "/"
+      }
+    }
+  },
+  "display": {
+    "backgroundColor": "#1a1a2e"
+  },
+  "deviceTypeList": ["watch"]
+}
