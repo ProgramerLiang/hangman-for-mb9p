@@ -26,6 +26,7 @@ Vela JS 小游戏，适用于小米手环 9 Pro。
 
 - 词库源于 [MiBand-Daily-Word-Practice](https://github.com/Bingak/MiBand-Daily-Word-Practice) 的 6574 词列表
 - 键盘 UI 参考 [SimpleRSS](https://github.com/yzl3014/SimpleRSS) 的暗色主题与圆角按键风格
+- 项目内 `vela_docs/` 文档来自 [VelaDocs](https://github.com/CheongSzesuen/VelaDocs)
 - Developed by **Corripo**，由 **DeepSeek V4 Pro** 强力辅助
 
 ## 构建
