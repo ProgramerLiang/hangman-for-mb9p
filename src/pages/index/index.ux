@@ -33,7 +33,7 @@
       <text class="settings-heading" style="margin-top: 18px;">振动反馈</text>
       <div class="setting-row">
         <text class="setting-label">按键振动</text>
-        <switch checked="{{vibrationOn}}" class="vib-switch" thumb-color="{{accentColor}}" track-color="{{accentColor}}44" @change="onVibChange"></switch>
+        <switch checked="{{vibrationOn}}" class="vib-switch" style="thumb-color: {{accentColor}}; track-color: {{accentColor}}44" @change="onVibChange"></switch>
       </div>
       <input class="btn-start" type="button" value="返回" style="background-color: {{accentColor}}" onclick="onGoMenu" />
     </div>
@@ -156,8 +156,8 @@
       keyRow1: [], keyRow2: [], keyRow3: [],
       accentColor: '#e94560',
       vibrationOn: true,
-      versionName: '1.1.4',
-      versionCode: 6,
+      versionName: '1.1.5',
+      versionCode: 7,
     },
 
     onInit: function () {
