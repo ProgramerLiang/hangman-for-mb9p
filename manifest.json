@@ -33,7 +33,7 @@
     }
   },
   "display": {
-    "backgroundColor": "#1a1a2e"
+    "backgroundColor": "#000000"
   },
   "deviceTypeList": [
     "watch"
